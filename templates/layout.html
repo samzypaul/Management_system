@@ -40,11 +40,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'shop:shop_dashboard' %}">Shop</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Orders</a>
+                        <a class="nav-link" href="{% url 'products:products_dashboard' %}">Products</a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'orders:orders_dashboard' %}">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="{% url 'User:about_us' %}">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-success btn-sm ms-lg-3" href="#">Login / Sign Up</a>

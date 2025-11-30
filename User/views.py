@@ -7,3 +7,7 @@ def home_page(request):
     template = loader.get_template("home.html")
     context = {}
     return HttpResponse(template.render({},request))# render(request,"templates/home.html")#
+
+def about_page(request):
+    template = loader.get_template('about.html')
+    return HttpResponse(template.render({},request))

@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<style>
+    /* Reusing custom classes for project consistency (Milky White & Crisp Blue Accent) */
+    .dashboard-bg {
+        background-color: #FFFFFF;
+    }
+    .accent-text {
+        color: #0080ff;
+    }
+    .metric-card {
+        background: #FFFFFF;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border-radius: 0.5rem;
+    }
+    .icon-box {
+        color: white;
+        background-color: #0080ff;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+</style>
+
+<div class="container py-5 dashboard-bg" style="min-height: 80vh;">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-light accent-text">About Our Platform</h1>
+        <p class="lead text-secondary">Driving efficiency and clarity in product and order management.</p>
+    </div>
+
+    <!-- 1. Mission Statement -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="p-5 metric-card">
+                <h2 class="h3 fw-bold mb-3 text-dark">Our Mission</h2>
+                <p class="text-muted">
+                    We believe that powerful management tools should be intuitive and beautiful. Our mission is to provide businesses with a seamless, high-performance platform for controlling their inventory, tracking complex orders, and gaining actionable insights without the unnecessary complexity. We bridge the gap between powerful data processing and a clean, user-friendly interface.
+                </p>
+                <p class="text-muted mb-0">
+                    The platform is built on modern architecture, ensuring real-time data flow and maximum scalability for growing enterprises.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Core Values Section -->
+    <div class="mb-5">
+        <h2 class="text-center fw-bold mb-4 text-dark">Our Core Principles</h2>
+        <div class="row g-4 text-center">
+            
+            <!-- Value 1: Clarity -->
+            <div class="col-md-4">
+                <div class="p-4 metric-card h-100">
+                    <div class="icon-box">
+                        <!-- Example icon for Clarity: Eye or Search -->
+                        <i class="bi bi-eye"></i> 
+                    </div>
+                    <h5 class="fw-bold accent-text">Clarity</h5>
+                    <p class="text-muted small mb-0">Data presented clearly and concisely, enabling quick and effective decision-making.</p>
+                </div>
+            </div>
+
+            <!-- Value 2: Integrity -->
+            <div class="col-md-4">
+                <div class="p-4 metric-card h-100">
+                    <div class="icon-box">
+                        <!-- Example icon for Integrity: Shield or Lock -->
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <h5 class="fw-bold accent-text">Integrity</h5>
+                    <p class="text-muted small mb-0">Reliable and accurate data handling is paramount to maintaining trust and operational stability.</p>
+                </div>
+            </div>
+
+            <!-- Value 3: Innovation -->
+            <div class="col-md-4">
+                <div class="p-4 metric-card h-100">
+                    <div class="icon-box">
+                        <!-- Example icon for Innovation: Lightbulb or Rocket -->
+                        <i class="bi bi-lightbulb"></i>
+                    </div>
+                    <h5 class="fw-bold accent-text">Innovation</h5>
+                    <p class="text-muted small mb-0">Constantly evolving our platform to integrate the latest technology and best practices.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 3. Contact/CTA Section -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="p-5 metric-card text-center bg-light">
+                <h3 class="fw-bold text-dark">Ready to take control of your data?</h3>
+                <p class="text-secondary mb-4">Contact our support team to learn more about advanced features and customized dashboards.</p>
+                <a href="#" class="btn btn-primary btn-lg shadow" style="background-color: #0080ff; border-color: #0080ff;">
+                    Get Started Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

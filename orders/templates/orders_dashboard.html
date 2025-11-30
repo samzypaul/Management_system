@@ -1,0 +1,189 @@
+
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}Orders Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    /* Project color palette: Milky White background, crisp blue accent */
+    .dashboard-bg {
+        background-color: #FFFFFF;
+    }
+    .accent-text {
+        color: #0080ff;
+    }
+    .metric-card {
+        background: #FFFFFF;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border-radius: 0.5rem;
+        transition: transform 0.3s;
+    }
+    .metric-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    .status-badge-pending {
+        background-color: #ffc107; /* Warning yellow */
+        color: #343a40;
+    }
+    .status-badge-shipped {
+        background-color: #17a2b8; /* Info cyan */
+        color: white;
+    }
+    .status-badge-delivered {
+        background-color: #28a745; /* Success green */
+        color: white;
+    }
+    .status-badge-cancelled {
+        background-color: #dc3545; /* Danger red */
+        color: white;
+    }
+    .data-table th, .data-table td {
+        border-top: none;
+    }
+    .data-table tbody tr:hover {
+        background-color: #f8f9fa; /* Light hover effect for rows */
+    }
+</style>
+
+<div class="container py-5 dashboard-bg" style="min-height: 80vh;">
+    <h1 class="text-center mb-2 fw-light accent-text">Order Management Console</h1>
+    <p class="text-center mb-5 text-secondary">Real-time overview and tracking of customer orders.</p>
+
+    <!-- 1. Key Metrics Cards -->
+    <div class="row mb-5 g-4">
+        <!-- Total Orders Card -->
+        <div class="col-md-3">
+            <div class="p-4 metric-card">
+                <h6 class="text-uppercase text-muted small">Total Orders</h6>
+                <p class="display-4 fw-bold accent-text">1,450</p>
+                <span class="text-success small">+5% this week</span>
+            </div>
+        </div>
+        <!-- Pending Orders Card (Yellow) -->
+        <div class="col-md-3">
+            <div class="p-4 metric-card">
+                <h6 class="text-uppercase text-muted small">Pending Shipment</h6>
+                <p class="display-4 fw-bold text-warning">125</p>
+                <span class="text-warning small">Urgent attention needed</span>
+            </div>
+        </div>
+        <!-- Total Revenue Card -->
+        <div class="col-md-3">
+            <div class="p-4 metric-card">
+                <h6 class="text-uppercase text-muted small">Total Revenue (MTD)</h6>
+                <p class="display-4 fw-bold accent-text">$85,200</p>
+                <span class="text-success small">+12% over target</span>
+            </div>
+        </div>
+        <!-- Shipped Orders Card (Cyan/Blue) -->
+        <div class="col-md-3">
+            <div class="p-4 metric-card">
+                <h6 class="text-uppercase text-muted small">Shipped Orders</h6>
+                <p class="display-4 fw-bold text-info">980</p>
+                <span class="text-info small">On track for delivery</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Recent Orders Table (Main Data View) -->
+    <div class="card metric-card shadow-sm mb-5">
+        <div class="card-header bg-white border-bottom fw-bold accent-text">
+            Recent Order Activity
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 data-table">
+                    <thead>
+                        <tr>
+                            <th class="text-muted small text-uppercase" scope="col">Order ID</th>
+                            <th class="text-muted small text-uppercase" scope="col">Customer</th>
+                            <th class="text-muted small text-uppercase" scope="col">Date</th>
+                            <th class="text-muted small text-uppercase" scope="col">Amount</th>
+                            <th class="text-muted small text-uppercase" scope="col">Status</th>
+                            <th class="text-muted small text-uppercase" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold accent-text">#MS1045</td>
+                            <td>Elara Vance</td>
+                            <td>2025-10-29</td>
+                            <td>$5,120.00</td>
+                            <td><span class="badge status-badge-delivered p-2">Delivered</span></td>
+                            <td><a href="#" class="text-decoration-none accent-text small">View Details</a></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold accent-text">#MS1044</td>
+                            <td>Kaelen Rix</td>
+                            <td>2025-10-29</td>
+                            <td>$450.00</td>
+                            <td><span class="badge status-badge-shipped p-2">Shipped</span></td>
+                            <td><a href="#" class="text-decoration-none accent-text small">Track</a></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold accent-text">#MS1043</td>
+                            <td>Zane Cortez</td>
+                            <td>2025-10-28</td>
+                            <td>$1,999.00</td>
+                            <td><span class="badge status-badge-pending p-2">Pending</span></td>
+                            <td><a href="#" class="text-decoration-none text-warning small">Process</a></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold accent-text">#MS1042</td>
+                            <td>Lira Sol</td>
+                            <td>2025-10-28</td>
+                            <td>$899.50</td>
+                            <td><span class="badge status-badge-shipped p-2">Shipped</span></td>
+                            <td><a href="#" class="text-decoration-none accent-text small">Track</a></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold accent-text">#MS1041</td>
+                            <td>Jax Nova</td>
+                            <td>2025-10-27</td>
+                            <td>$3,200.00</td>
+                            <td><span class="badge status-badge-delivered p-2">Delivered</span></td>
+                            <td><a href="#" class="text-decoration-none accent-text small">View Details</a></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold accent-text">#MS1040</td>
+                            <td>Anya Drone</td>
+                            <td>2025-10-27</td>
+                            <td>$75.00</td>
+                            <td><span class="badge status-badge-cancelled p-2">Cancelled</span></td>
+                            <td><a href="#" class="text-decoration-none text-danger small">History</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-white text-center">
+            <a href="{% url 'orders:orders_details' %}" class="text-decoration-none accent-text fw-bold small">View All Orders →</a>
+        </div>
+    </div>
+
+    <!-- 3. Status Filter/Summary Cards -->
+    <h2 class="h5 mb-3 text-dark">Order Status Summary</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="p-3 metric-card text-center">
+                <p class="h1 fw-bold text-success">85%</p>
+                <p class="text-muted small mb-0">Delivery Success Rate</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 metric-card text-center">
+                <p class="h1 fw-bold text-danger">3%</p>
+                <p class="text-muted small mb-0">Cancellation Rate</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 metric-card text-center">
+                <p class="h1 fw-bold text-info">2.1</p>
+                <p class="text-muted small mb-0">Average Days to Ship</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

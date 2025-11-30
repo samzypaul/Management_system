@@ -1,0 +1,125 @@
+
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}Products Management{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom styles for the sleek light mode look */
+    .futuristic-card {
+        background: #FFFFFF; /* Milky White Card Background */
+        border: 1px solid #e0e0e0; /* Light border */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle light shadow */
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .futuristic-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Enhanced hover shadow */
+    }
+    .futuristic-text {
+        color: #0080ff; /* Slightly darker, crisp blue for light mode accents */
+    }
+    .futuristic-badge {
+        background-color: #0080ff15;
+        color: #0080ff;
+        border: 1px solid #0080ff;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container py-5" style="min-height: 80vh; background-color: #FFFFFF;">
+    <h1 class="text-center mb-2 fw-light futuristic-text">Product Matrix Control</h1>
+    <p class="text-center mb-5 text-secondary">Manage your inventory using the digital interface below.</p>
+
+    <!-- Header Actions (Add Product) -->
+    <div class="d-flex justify-content-end mb-4">
+        <a href="#" class="btn btn-primary btn-lg shadow" style="background-color: #0080ff; border-color: #0080ff; color: white; font-weight: bold;">
+            + Add New Product
+        </a>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <!-- Product Card 1 -->
+        <div class="col">
+            <div class="card futuristic-card h-100 text-dark">
+                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text=Quantum+Processor" class="card-img-top" alt="Product 1">
+                <div class="card-body">
+                    <h5 class="card-title futuristic-text">Quantum Processor Z1</h5>
+                    <p class="card-text small text-muted">High-speed computation unit, 128 core parallel processing.</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fs-4 fw-bold text-dark">$1,999.00</span>
+                        <span class="badge futuristic-badge">In Stock (45)</span>
+                    </div>
+                    <div class="btn-group w-100" role="group">
+                        <button type="button" class="btn btn-outline-info btn-sm">Edit (Update)</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Card 2 -->
+        <div class="col">
+            <div class="card futuristic-card h-100 text-dark">
+                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text=Holo+Display" class="card-img-top" alt="Product 2">
+                <div class="card-body">
+                    <h5 class="card-title futuristic-text">Holographic Display Unit</h5>
+                    <p class="card-text small text-muted">3D projection capability, variable refresh rate up to 1000 Hz.</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fs-4 fw-bold text-dark">$899.50</span>
+                        <span class="badge futuristic-badge">In Stock (120)</span>
+                    </div>
+                    <div class="btn-group w-100" role="group">
+                        <button type="button" class="btn btn-outline-info btn-sm">Edit (Update)</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Card 3 -->
+        <div class="col">
+            <div class="card futuristic-card h-100 text-dark">
+                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text=Aether+Battery" class="card-img-top" alt="Product 3">
+                <div class="card-body">
+                    <h5 class="card-title futuristic-text">Aether Power Battery</h5>
+                    <p class="card-text small text-muted">Zero-loss energy storage, 500 year lifespan guarantee.</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fs-4 fw-bold text-dark">$450.00</span>
+                        <span class="badge futuristic-badge">Low Stock (15)</span>
+                    </div>
+                    <div class="btn-group w-100" role="group">
+                        <button type="button" class="btn btn-outline-info btn-sm">Edit (Update)</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Card 4 -->
+        <div class="col">
+            <div class="card futuristic-card h-100 text-dark">
+                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text=Neural+Link" class="card-img-top" alt="Product 4">
+                <div class="card-body">
+                    <h5 class="card-title futuristic-text">Neural Interface V.2</h5>
+                    <p class="card-text small text-muted">Direct brain-computer connection for rapid data transfer.</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fs-4 fw-bold text-dark">$3,200.00</span>
+                        <span class="badge futuristic-badge">Out of Stock (0)</span>
+                    </div>
+                    <div class="btn-group w-100" role="group">
+                        <button type="button" class="btn btn-outline-info btn-sm">Edit (Update)</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more products here -->
+
+    </div>
+    <!-- End Product Grid -->
+
+</div>
+{% endblock %}
