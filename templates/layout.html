@@ -1,0 +1,107 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        /* Optional: Custom style for the dark background of the hero section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "assets/img/hero_background.jpg" %}'); /* Using the suggested image */
+            background-size: cover;
+            background-position: center;
+            min-height: 45vh; /* Responsive height */
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    <title>MS - Management System</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container-fluid container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'assets/img/logo.png' %}" alt="MS Logo" style="width: 40px" class="rounded-circle me-2">
+                <span class="fw-bold">Management System</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shop:shop_dashboard' %}">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-success btn-sm ms-lg-3" href="#">Login / Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <footer class="bg-dark text-white pt-5 pb-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-3">
+                    <h5 class="text-success mb-3">Connect With Us</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">WhatsApp</a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">Facebook</a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">Twitter (X)</a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">Instagram</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 col-sm-6 mb-3">
+                    <h5 class="text-success mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">Home</a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">Shop</a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">Orders</a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">About</a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">Login/Sign Up</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 col-sm-12 mb-3">
+                    <h5 class="text-success mb-3">Contact Information</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">📞 +255 755555555</a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">📧 Email US: ms@ms.com </a></li>
+                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">📍 Location: Kinyerezi Dar Es Salaam</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center border-top border-secondary pt-3 mt-4">
+                <p class="mb-0" id="year-copyright"></p>
+                <script>
+                    const d = new Date();
+                    let year = d.getFullYear();
+                    document.getElementById("year-copyright").innerHTML = "© " + year + " MS. All Rights Reserved.";
+                </script>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="../static/assets/js/bootstrap.bundle.js"></script>
+</body>
+
+</html>
