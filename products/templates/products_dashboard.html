@@ -1,6 +1,6 @@
 
 {% extends "layout.html" %}
-{% load static %}
+{%  load static %}
 {% block title %}Products Management{% endblock %}
 
 {% block content %}
@@ -19,10 +19,23 @@
     .futuristic-text {
         color: #0080ff; /* Slightly darker, crisp blue for light mode accents */
     }
-    .futuristic-badge {
-        background-color: #0080ff15;
-        color: #0080ff;
-        border: 1px solid #0080ff;
+    /* Dynamic Badge Styles */
+    .futuristic-badge-instock {
+        background-color: #28a74515; /* Green tint */
+        color: #28a745;
+        border: 1px solid #28a745;
+        font-weight: 600;
+    }
+    .futuristic-badge-lowstock {
+        background-color: #ffc10715; /* Yellow tint */
+        color: #ffc107;
+        border: 1px solid #ffc107;
+        font-weight: 600;
+    }
+    .futuristic-badge-outofstock {
+        background-color: #dc354515; /* Red tint */
+        color: #dc3545;
+        border: 1px solid #dc3545;
         font-weight: 600;
     }
 </style>
@@ -33,93 +46,62 @@
 
     <!-- Header Actions (Add Product) -->
     <div class="d-flex justify-content-end mb-4">
-        <a href="#" class="btn btn-primary btn-lg shadow" style="background-color: #0080ff; border-color: #0080ff; color: white; font-weight: bold;">
+        <!-- Corrected URL name to 'add_product' -->
+        <a href="{% url 'products:add_product' %}" class="btn btn-primary btn-lg shadow" style="background-color: #0080ff; border-color: #0080ff; color: white; font-weight: bold;">
             + Add New Product
         </a>
     </div>
 
     <!-- Product Grid -->
+    <!-- The classes 'row-cols-lg-4' ensure that cards wrap after 4 items on large screens -->
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        <!-- Product Card 1 -->
+
+        {% for product in products %}
+        <!-- Product Card Loop: This block repeats for every product object fetched from the database -->
         <div class="col">
             <div class="card futuristic-card h-100 text-dark">
-                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text=Quantum+Processor" class="card-img-top" alt="Product 1">
+                <!-- Banner Image (using product.banner or a placeholder) -->
+                {% if product.banner %}
+                <img src="{{ product.banner.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                <!-- Placeholder Image (updated with product name for context) -->
+                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text={{ product.name|urlencode }}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
+
                 <div class="card-body">
-                    <h5 class="card-title futuristic-text">Quantum Processor Z1</h5>
-                    <p class="card-text small text-muted">High-speed computation unit, 128 core parallel processing.</p>
+                    <h5 class="card-title futuristic-text">{{ product.name }}</h5>
+                    <!-- Truncate description to 70 characters for clean card layout -->
+                    <p class="card-text small text-muted">{{ product.description|truncatechars:70 }}</p>
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="fs-4 fw-bold text-dark">$1,999.00</span>
-                        <span class="badge futuristic-badge">In Stock (45)</span>
+                        <!-- Display price and currency -->
+                        <span class="fs-50 fw-bold text-dark">{{ product.currency }} {{ product.price|floatformat:2 }}</span>
+
+                        <!-- Dynamic Stock Status Badge Logic -->
+                        {% if product.quantity > 50 %}
+                            <span class="badge futuristic-badge-instock">In Stock ({{ product.quantity }})</span>
+                        {% elif product.quantity > 0 %}
+                            <span class="badge futuristic-badge-lowstock">Low Stock ({{ product.quantity }})</span>
+                        {% else %}
+                            <span class="badge futuristic-badge-outofstock">Out of Stock (0)</span>
+                        {% endif %}
                     </div>
                     <div class="btn-group w-100" role="group">
-                        <button type="button" class="btn btn-outline-info btn-sm">Edit (Update)</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
+                        <!-- Placeholders for future edit and delete views -->
+                        <a href="{% url 'products:update_product' product.pk %}" class="btn btn-outline-info btn-sm">Edit (Update)</a>
+                        <a href="{% url 'products:delete_product' product.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Product Card 2 -->
-        <div class="col">
-            <div class="card futuristic-card h-100 text-dark">
-                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text=Holo+Display" class="card-img-top" alt="Product 2">
-                <div class="card-body">
-                    <h5 class="card-title futuristic-text">Holographic Display Unit</h5>
-                    <p class="card-text small text-muted">3D projection capability, variable refresh rate up to 1000 Hz.</p>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="fs-4 fw-bold text-dark">$899.50</span>
-                        <span class="badge futuristic-badge">In Stock (120)</span>
-                    </div>
-                    <div class="btn-group w-100" role="group">
-                        <button type="button" class="btn btn-outline-info btn-sm">Edit (Update)</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
-                    </div>
-                </div>
-            </div>
+        {% empty %}
+        <!-- Message displayed if the 'products' list is empty -->
+        <div class="col-12 text-center py-5">
+            <p class="lead text-muted">No products found in the inventory. Start by adding one!</p>
+            <a href="{% url 'products:add_product' %}" class="btn btn-primary btn-lg mt-3">Add First Product</a>
         </div>
-
-        <!-- Product Card 3 -->
-        <div class="col">
-            <div class="card futuristic-card h-100 text-dark">
-                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text=Aether+Battery" class="card-img-top" alt="Product 3">
-                <div class="card-body">
-                    <h5 class="card-title futuristic-text">Aether Power Battery</h5>
-                    <p class="card-text small text-muted">Zero-loss energy storage, 500 year lifespan guarantee.</p>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="fs-4 fw-bold text-dark">$450.00</span>
-                        <span class="badge futuristic-badge">Low Stock (15)</span>
-                    </div>
-                    <div class="btn-group w-100" role="group">
-                        <button type="button" class="btn btn-outline-info btn-sm">Edit (Update)</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product Card 4 -->
-        <div class="col">
-            <div class="card futuristic-card h-100 text-dark">
-                <img src="https://placehold.co/600x400/DDEEFF/0080FF?text=Neural+Link" class="card-img-top" alt="Product 4">
-                <div class="card-body">
-                    <h5 class="card-title futuristic-text">Neural Interface V.2</h5>
-                    <p class="card-text small text-muted">Direct brain-computer connection for rapid data transfer.</p>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="fs-4 fw-bold text-dark">$3,200.00</span>
-                        <span class="badge futuristic-badge">Out of Stock (0)</span>
-                    </div>
-                    <div class="btn-group w-100" role="group">
-                        <button type="button" class="btn btn-outline-info btn-sm">Edit (Update)</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add more products here -->
+        {% endfor %}
 
     </div>
     <!-- End Product Grid -->
-
 </div>
 {% endblock %}

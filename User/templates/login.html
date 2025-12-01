@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}User Login{% endblock %}
+
+{% block content %}
+<style>
+    /* * Styles meticulously matched to the reference image (image_5b89f9.png) 
+     * using Bootstrap 5 classes and minimal custom CSS for exact color/sizing.
+     */
+    .dashboard-bg {
+        /* Exact Solid Blue-Teal background */
+        /*background-color: #00A9A9; */
+        min-height: 100vh;
+        background-image:  url('{% static "assets/img/hero_background.jpg" %}');
+    }
+    .login-card {
+        /* Exact White box, heavily rounded (2rem), no shadow */
+        background: #FFFFFF;
+        border: none;
+        box-shadow: none;
+        border-radius: 2rem; 
+        padding: 3rem; /* Adjusted for image fidelity */
+    }
+    .login-title {
+        color: #333;
+        font-weight: 400; /* Regular weight */
+        margin-bottom: 2.5rem; /* Increased margin below title */
+    }
+    .form-label {
+        font-weight: 400; /* Regular weight labels, like the image */
+        color: #333;
+        margin-bottom: 0.25rem;
+    }
+    .form-control {
+        height: 2.5rem; /* Standard input height for Bootstrap 5 */
+        padding: 0.5rem 1rem;
+    }
+    .btn-sign-in {
+        /* Solid blue button */
+        background-color: #0080ff; 
+        border-color: #0080ff;
+        color: white;
+        font-weight: 500; /* Medium bold */
+        padding: 0.5rem 0; /* Slightly reduced vertical padding to match image */
+        transition: background-color 0.2s;
+        border-radius: 0.25rem; /* Standard Bootstrap rounding on button */
+    }
+    .btn-sign-in:hover {
+        background-color: #0066cc; 
+        border-color: #0066cc;
+    }
+    .form-control:focus {
+        border-color: #00A9A9; 
+        box-shadow: 0 0 0 0.25rem rgba(0, 169, 169, 0.25);
+    }
+    
+    /* Specific styling for footer links to match alignment and color */
+    .footer-link-group {
+        margin-top: 2rem;
+        font-size: 0.95rem;
+        color: #333; /* Ensuring the surrounding text is dark */
+    }
+    .footer-link-group a {
+        color: #0080ff; 
+        font-weight: 400; /* Regular weight for links, as shown in the image */
+        text-decoration: none; 
+    }
+</style>
+
+<!-- Main container centered both horizontally and vertically -->
+<!-- The `min-height: 100vh` on the dashboard-bg handles the vertical centering -->
+<div class="container-fluid d-flex justify-content-center align-items-center dashboard-bg">
+    
+    <!-- Column width adjusted to match the compact size in the image (col-4 is a good fit) -->
+    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-8 col-11">
+        <div class="login-card">
+            
+            <h1 class="h3 text-center login-title">Login</h1>
+
+            <form method="POST" action="#">
+                {% csrf_token %} 
+
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <label for="username" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="username" name="username" placeholder="Enter email" required>
+                </div>
+
+                <!-- Password Field -->
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                </div>
+
+                <!-- Checkbox: Show Password -->
+                <div class="form-check mb-5">
+                    <input class="form-check-input" type="checkbox" id="showPassword" onclick="document.getElementById('password').type = this.checked ? 'text' : 'password';">
+                    <label class="form-check-label text-dark" for="showPassword">
+                        Show Password
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-sign-in w-100">
+                    SIGN IN
+                </button>
+            </form>
+
+            <!-- Footer Links (Center Aligned) -->
+            <div class="text-center footer-link-group">
+                <p class="mb-1">
+                    Forgot <a href="#">Username</a> / <a href="#">Password</a>?
+                </p>
+                <p class="mb-0">
+                    Don't have an account? <a href="#">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

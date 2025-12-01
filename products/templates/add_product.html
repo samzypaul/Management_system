@@ -1,0 +1,133 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}Add New Product{% endblock %}
+
+{% block content %}
+<style>
+    /* Minimal Custom CSS to define the project color palette and the new central box look. */
+    .page-background {
+        /* New: Light gray background to make the central box pop */
+        background-color: #f8f9fa; 
+    }
+    .accent-text {
+        color: #0080ff; /* Crisp Blue Accent */
+    }
+    /* This new class defines the central "Box Element" */
+    .main-content-box {
+        background: #FFFFFF;
+        border: 1px solid #e0e0e0;
+        border-radius: 0.75rem; /* Slightly larger radius */
+    }
+    .form-control:focus, .form-select:focus {
+        /* Override default Bootstrap focus color to match accent blue */
+        border-color: #0080ff;
+        box-shadow: 0 0 0 0.25rem rgba(0, 128, 255, 0.25);
+    }
+</style>
+
+<!-- Main wrapper with light background and min-height for vertical centering -->
+<div class="container py-5 page-background" style="min-height: 100vh;">
+    <div class="row justify-content-center">
+        <!-- The central column that contains the box -->
+        <div class="col-lg-8">
+            <!-- START: The Centered Box Element -->
+            <div class="main-content-box p-5 shadow-lg">
+
+                <!-- Title (Now inside the box) -->
+                <h1 class="fw-light accent-text mb-4 text-center">Add New Inventory Product</h1>
+                
+                <!-- Messages (Bootstrap component) -->
+                {% if messages %}
+                <div class="messages mb-4">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Form Content -->
+                <form method="POST" action="{% url 'products:add_product' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Product Details Section -->
+                    <h5 class="text-dark border-bottom pb-2 mb-4 fw-bold">Product Core Information</h5>
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="id_name" class="form-label fw-semibold">Product Name</label>
+                        <input type="text" class="form-control" id="id_name" name="name" required maxlength="100">
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <label for="id_category" class="form-label fw-semibold">Category</label>
+                        <input type="text" class="form-control" id="id_category" name="category" required maxlength="100">
+                    </div>
+
+                    <!-- Price & Currency (Row) -->
+                    <div class="row mb-3 g-3">
+                        <div class="col-md-6">
+                            <label for="id_price" class="form-label fw-semibold">Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" step="0.01" class="form-control" id="id_price" name="price" required min="0">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_currency" class="form-label fw-semibold">Currency</label>
+                            <select class="form-select" id="id_currency" name="currency" required>
+                                <option value="USD" selected>USD - US Dollar</option>
+                                <option value="EUR">EUR - Euro</option>
+                                <option value="GBP">GBP - British Pound</option>
+                                <option value="JPY">JPY - Japanese Yen</option>
+                                <option value="TZS">TZS - Tanzanian Shillings</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <label for="id_description" class="form-label fw-semibold">Description</label>
+                        <textarea class="form-control" id="id_description" name="description" rows="4" required></textarea>
+                    </div>
+                    
+                    <!-- Banner Image -->
+                    <div class="mb-5">
+                        <label for="id_banner" class="form-label fw-semibold">Product Banner Image</label>
+                        <input type="file" class="form-control" id="id_banner" name="banner">
+                        <div class="form-text text-muted">Optional. Used for product listings.</div>
+                    </div>
+
+                    <!-- Initial Stock Transaction Section -->
+                    <h5 class="text-dark border-bottom pb-2 mb-3 fw-bold">Initial Stock Level</h5>
+                    <p class="text-muted small mb-4">Set the starting inventory amount by logging the initial receipt transaction.</p>
+
+                    <!-- Initial Quantity & Note -->
+                    <div class="row mb-5 g-3">
+                        <div class="col-md-6">
+                            <label for="id_initial_quantity" class="form-label fw-semibold">Quantity Received</label>
+                            <input type="number" class="form-control" id="id_initial_quantity" name="initial_stock" min="0" value="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_stock_note" class="form-label fw-semibold">Stock Note (Optional)</label>
+                            <input type="text" class="form-control" id="id_stock_note" name="stock_note" placeholder="e.g., Q4 Factory Shipment">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2">
+                        <!-- Using btn-primary for the accent color -->
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                            Create Product & Initialize Stock
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- END: The Centered Box Element -->
+        </div>
+    </div>
+</div>
+{% endblock %}

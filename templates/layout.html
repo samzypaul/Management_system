@@ -53,7 +53,7 @@
                         <a class="nav-link" href="{% url 'User:about_us' %}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-success btn-sm ms-lg-3" href="#">Login / Sign Up</a>
+                        <a class="btn btn-success btn-sm ms-lg-3" href="{% url 'User:login' %}">Login / Sign Up</a>
                     </li>
                 </ul>
             </div>
@@ -81,7 +81,7 @@
                         <li><a href="#" class="text-white text-decoration-none py-1 d-block">Shop</a></li>
                         <li><a href="#" class="text-white text-decoration-none py-1 d-block">Orders</a></li>
                         <li><a href="#" class="text-white text-decoration-none py-1 d-block">About</a></li>
-                        <li><a href="#" class="text-white text-decoration-none py-1 d-block">Login/Sign Up</a></li>
+                        <li><a href="{% url 'User:login' %}" class="text-white text-decoration-none py-1 d-block">Login/Sign Up</a></li>
                     </ul>
                 </div>
 
