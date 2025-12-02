@@ -51,6 +51,9 @@
     <h1 class="text-center mb-2 fw-light accent-text">Order Management Console</h1>
     <p class="text-center mb-5 text-secondary">Real-time overview and tracking of customer orders.</p>
 
+
+
+
     <!-- 1. Key Metrics Cards -->
     <div class="row mb-5 g-4">
         <!-- Total Orders Card -->
@@ -85,6 +88,14 @@
                 <span class="text-info small">On track for delivery</span>
             </div>
         </div>
+    </div>
+
+      <!-- Header Actions (Add Product) -->
+    <div class="d-flex justify-content-end mb-4">
+        <!-- Corrected URL name to 'add_product' -->
+        <a href="{% url 'orders:create_orders' %}" class="btn btn-primary btn-lg shadow" style="background-color: #0080ff; border-color: #0080ff; color: white; font-weight: bold;">
+            + Create New Order
+        </a>
     </div>
 
     <!-- 2. Recent Orders Table (Main Data View) -->

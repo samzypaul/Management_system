@@ -14,7 +14,6 @@ def products_dashboard(request):
     print(products.filter(price=2300000))
     print(stock_transactions)
     context = {"products": products, "stock_transactions": stock_transactions}
-
     return HttpResponse(template.render(context, request))
 
 

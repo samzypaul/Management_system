@@ -1,0 +1,275 @@
+
+{% extends "layout.html" %}
+{%  load static %}
+{% block title %}Add New Order{% endblock %}
+
+{% block content %}
+<style>
+    /* Styling based on existing templates */
+    .page-background {
+        background-color: #f8f9fa;
+    }
+    .accent-text {
+        color: #0080ff; /* Crisp Blue Accent */
+    }
+    .main-content-box {
+        background: #FFFFFF;
+        border: 1px solid #e0e0e0;
+        border-radius: 0.75rem;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #0080ff;
+        box-shadow: 0 0 0 0.25rem rgba(0, 128, 255, 0.25);
+    }
+    .line-item-card {
+        background-color: #f0f8ff; /* Light blue background for line items */
+        border-left: 5px solid #0080ff;
+    }
+</style>
+
+<div class="container py-5 page-background">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- START: The Centered Box Element -->
+            <div class="main-content-box p-5 shadow-lg">
+
+                <h1 class="fw-light accent-text mb-2 text-center">New Order Creation</h1>
+                <p class="text-center text-muted mb-4">Input customer, shipping, and product details to generate new orders.</p>
+
+                <!-- Messages -->
+                {% if messages %}
+                <div class="messages mb-4">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="POST" action="{% url 'orders:create_orders' %}" id="orderForm">
+                    {% csrf_token %}
+
+                    <!-- 1. Customer Details -->
+                    <h5 class="text-dark border-bottom pb-2 mb-4 fw-bold">Customer Information</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="id_first_name" class="form-label fw-semibold">First Name</label>
+                            <input type="text" class="form-control" id="id_first_name" name="first_name" required maxlength="100">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_last_name" class="form-label fw-semibold">Last Name</label>
+                            <input type="text" class="form-control" id="id_last_name" name="last_name" required maxlength="100">
+                        </div>
+                        <div class="col-12">
+                            <label for="id_email" class="form-label fw-semibold">Email</label>
+                            <input type="email" class="form-control" id="id_email" name="email" required>
+                        </div>
+                    </div>
+
+                    <!-- 2. Shipping Details -->
+                    <h5 class="text-dark border-bottom pb-2 mb-4 fw-bold">Shipping Address</h5>
+                    <div class="row g-3 mb-5">
+                        <div class="col-12">
+                            <label for="id_address1" class="form-label fw-semibold">Address Line 1</label>
+                            <input type="text" class="form-control" id="id_address1" name="address_line_1" required maxlength="255">
+                        </div>
+                        <div class="col-12">
+                            <label for="id_address2" class="form-label fw-semibold">Address Line 2 (Optional)</label>
+                            <input type="text" class="form-control" id="id_address2" name="address_line_2" maxlength="255">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_city" class="form-label fw-semibold">City</label>
+                            <input type="text" class="form-control" id="id_city" name="city" required maxlength="100">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="id_state" class="form-label fw-semibold">State/Province</label>
+                            <input type="text" class="form-control" id="id_state" name="state" required maxlength="100">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="id_zip_code" class="form-label fw-semibold">ZIP/Postal Code</label>
+                            <input type="text" class="form-control" id="id_zip_code" name="zip_code" required maxlength="20">
+                        </div>
+                        <div class="col-12">
+                            <label for="id_country" class="form-label fw-semibold">Country</label>
+                            <input type="text" class="form-control" id="id_country" name="country" value="United States" required maxlength="100">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_shipping_cost" class="form-label fw-semibold">Shipping Cost</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" step="0.01" class="form-control" id="id_shipping_cost" name="shipping_cost" value="15.00" min="0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Product Line Items -->
+                    <h5 class="text-dark border-bottom pb-2 mb-4 fw-bold">Order Items
+                        <span class="small text-danger fw-normal">(Each item below will generate a separate Order in the database)</span>
+                    </h5>
+
+                    <div id="product-items-container">
+                        <!-- Dynamic product line items will be added here -->
+                        <p class="text-muted text-center py-3" id="no-items-message">
+                            Click 'Add Product' to start adding items to the order(s).
+                        </p>
+                    </div>
+
+                    <!-- Add Product Button -->
+                    <div class="d-grid mb-5">
+                        <button type="button" class="btn btn-outline-primary fw-bold" id="add-product-btn">
+                            + Add Product Item
+                        </button>
+                    </div>
+
+
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold" id="submit-order-btn" disabled>
+                            Create Orders (1 Order Per Product)
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- END: The Centered Box Element -->
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('product-items-container');
+        const addButton = document.getElementById('add-product-btn');
+        const submitButton = document.getElementById('submit-order-btn');
+        const noItemsMessage = document.getElementById('no-items-message');
+        let itemIndex = 0; // Unique index for each line item
+
+        // Placeholder data for product dropdown (Replace with Django context loop:
+
+        const productData = [
+            {% for product in products %}
+            { id: {{ product.pk }}, name: "{{ product.name|escapejs }}", price: {{ product.price }} }{% if not forloop.last %},{% endif %}
+        {% empty %}
+            // Fallback for when no products are passed from the view (for debugging)
+            { id: 1, name: "Quantum Processor Z1 (MOCK)", price: 1999.00 },
+            { id: 2, name: "Holographic Display Unit (MOCK)", price: 899.50 },
+        {% endfor %}
+        ];
+
+        function updateSubmitButtonState() {
+            const hasItems = container.querySelectorAll('.line-item').length > 0;
+            submitButton.disabled = !hasItems;
+            noItemsMessage.style.display = hasItems ? 'none' : 'block';
+        }
+
+        function createProductOptions() {
+            let options = '<option value="" disabled selected>-- Select a Product --</option>';
+            productData.forEach(p => {
+                // The value should be the product ID and the price (to set the hidden field for validation/display)
+                options += `<option value="${p.id}" data-price="${p.price}">${p.name} ($${p.price.toFixed(2)})</option>`;
+            });
+            return options;
+        }
+
+        function addProductItem() {
+            console.log("Attempting to add new product item. Current index:", itemIndex); // DEBUG: Check if function is called
+            try {
+                const newIndex = itemIndex++;
+
+                const lineItemDiv = document.createElement('div');
+                lineItemDiv.classList.add('p-3', 'mb-3', 'line-item-card', 'line-item');
+
+                lineItemDiv.innerHTML = `
+                    <div class="row g-3 align-items-end">
+                        Product Dropdown
+
+                        <div class="col-md-6">
+                            <label class="form-label small text-muted">Product</label>
+                            <select class="form-select product-select" name="products[${newIndex}][id]" required>
+                                ${createProductOptions()}
+                            </select>
+                            Hidden field to store the price snapshot at the time of entry
+
+                            <input type="hidden" name="products[${newIndex}][price_snapshot]" class="price-snapshot-input" value="0.00">
+                        </div>
+
+                        Quantity Input
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">Quantity</label>
+                            <input type="number" class="form-control quantity-input" name="products[${newIndex}][quantity]" value="1" min="1" required>
+                        </div>
+
+                        Line Total Display
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted">Line Total</label>
+                            <p class="mb-0 fw-bold line-total-display">$0.00</p>
+                        </div>
+
+                        Remove Button
+                        <div class="col-md-1 text-end">
+                            <button type="button" class="btn btn-sm btn-outline-danger remove-item-btn" title="Remove Item">
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(lineItemDiv);
+                console.log("Product item added successfully."); // DEBUG: Confirmation
+
+                // Add event listeners for the new item
+                const selectElement = lineItemDiv.querySelector('.product-select');
+                const quantityElement = lineItemDiv.querySelector('.quantity-input');
+                const removeButton = lineItemDiv.querySelector('.remove-item-btn');
+
+                selectElement.addEventListener('change', calculateLineTotal);
+                quantityElement.addEventListener('input', calculateLineTotal);
+                removeButton.addEventListener('click', function() {
+                    lineItemDiv.remove();
+                    updateSubmitButtonState();
+                });
+
+                // Initial calculation
+                calculateLineTotal({ target: selectElement });
+                updateSubmitButtonState();
+            } catch (error) {
+                console.error("Error creating product item:", error); // DEBUG: Catch any script errors
+            }
+        }
+
+        function calculateLineTotal(event) {
+            const lineItemDiv = event.target.closest('.line-item');
+            const select = lineItemDiv.querySelector('.product-select');
+            const quantityInput = lineItemDiv.querySelector('.quantity-input');
+            const totalDisplay = lineItemDiv.querySelector('.line-total-display');
+            const priceSnapshotInput = lineItemDiv.querySelector('.price-snapshot-input');
+
+            const selectedOption = select.options[select.selectedIndex];
+            const price = parseFloat(selectedOption.dataset.price || 0);
+            const quantity = parseInt(quantityInput.value || 0);
+
+            const total = price * quantity;
+            totalDisplay.textContent = `$${total.toFixed(2)}`;
+            priceSnapshotInput.value = price.toFixed(2); // Store the current price
+
+            // Basic quantity validation check
+            if (quantity <= 0) {
+                quantityInput.classList.add('is-invalid');
+                submitButton.disabled = true;
+            } else {
+                quantityInput.classList.remove('is-invalid');
+                // Re-check global state (in case multiple fields are invalid)
+                updateSubmitButtonState();
+            }
+        }
+
+        // Initialize listeners
+        addButton.addEventListener('click', addProductItem);
+        updateSubmitButtonState(); 
+
+        // Add the first item automatically for better UX
+        addProductItem();
+    })
+</script>
+{% endblock %}
